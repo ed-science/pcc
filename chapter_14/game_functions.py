@@ -119,24 +119,21 @@ def check_high_score(stats, sb):
 def check_bullet_alien_collisions(ai_settings, screen, stats, sb, ship,
         aliens, bullets):
     """Respond to bullet-alien collisions."""
-    # Remove any bullets and aliens that have collided.
-    collisions = pygame.sprite.groupcollide(bullets, aliens, True, True)
-    
-    if collisions:
+    if collisions := pygame.sprite.groupcollide(bullets, aliens, True, True):
         for aliens in collisions.values():
             stats.score += ai_settings.alien_points * len(aliens)
             sb.prep_score()
         check_high_score(stats, sb)
-    
+
     if len(aliens) == 0:
         # If the entire fleet is destroyed, start a new level.
         bullets.empty()
         ai_settings.increase_speed()
-        
+
         # Increase level.
         stats.level += 1
         sb.prep_level()
-        
+
         create_fleet(ai_settings, screen, ship, aliens)
     
 def check_fleet_edges(ai_settings, aliens):
@@ -204,15 +201,13 @@ def update_aliens(ai_settings, screen, stats, sb, ship, aliens, bullets):
 def get_number_aliens_x(ai_settings, alien_width):
     """Determine the number of aliens that fit in a row."""
     available_space_x = ai_settings.screen_width - 2 * alien_width
-    number_aliens_x = int(available_space_x / (2 * alien_width))
-    return number_aliens_x
+    return int(available_space_x / (2 * alien_width))
     
 def get_number_rows(ai_settings, ship_height, alien_height):
     """Determine the number of rows of aliens that fit on the screen."""
     available_space_y = (ai_settings.screen_height -
                             (3 * alien_height) - ship_height)
-    number_rows = int(available_space_y / (2 * alien_height))
-    return number_rows
+    return int(available_space_y / (2 * alien_height))
     
 def create_alien(ai_settings, screen, aliens, alien_number, row_number):
     """Create an alien, and place it in the row."""

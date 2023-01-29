@@ -12,12 +12,12 @@ class Car():
         
     def get_descriptive_name(self):
         """Return a neatly formatted descriptive name."""
-        long_name = str(self.year) + ' ' + self.manufacturer + ' ' + self.model
+        long_name = f'{str(self.year)} {self.manufacturer} {self.model}'
         return long_name.title()
     
     def read_odometer(self):
         """Print a statement showing the car's mileage."""
-        print("This car has " + str(self.odometer_reading) + " miles on it.")
+        print(f"This car has {str(self.odometer_reading)} miles on it.")
         
     def update_odometer(self, mileage):
         """
